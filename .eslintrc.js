@@ -2,6 +2,6 @@
 module.exports = {
     "extends": "ego",
     "rules": {
-      // Additional, per-project rules...
+        "no-underscore-dangle": "off"
     }
 }

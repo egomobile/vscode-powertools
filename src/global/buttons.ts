@@ -71,12 +71,10 @@ export function initGlobalButtonEvents(extension: vscode.ExtensionContext) {
 
                 ego_helpers.executeOnEditorChangedEvents(
                     LIST_OF_BUTTONS,
-                    (code: string, b) => {
-                        return ego_pt.executeCode(code, [{
-                            name: 'button',
-                            value: ego_helpers.toCodeButton(b.button),
-                        }]);
-                    }
+                    (code: string, b) => ego_pt.executeCode(code, [{
+                        name: 'button',
+                        value: ego_helpers.toCodeButton(b.button),
+                    }])
                 );
             } catch (e) {
                 ego_log.CONSOLE
@@ -96,9 +94,7 @@ export async function reloadGlobalUserButtons() {
         this
     );
 
-    const BUTTONS = ego_helpers.asArray(SETTINGS.buttons).map(b => {
-        return ego_pt.importValues(b);
-    });
+    const BUTTONS = ego_helpers.asArray(SETTINGS.buttons).map(b => ego_pt.importValues(b));
     if (BUTTONS.length < 1) {
         return;
     }
@@ -157,11 +153,11 @@ export async function reloadGlobalUserButtons() {
                                 const CMD_ID = ego_helpers.toStringSafe(CMD_ACTION.command);
                                 const CMD_ARGS: any[] =
                                     _.isNil(CMD_ACTION.arguments) ? []
-                                                                  : ego_helpers.asArray(CMD_ACTION, false);
+                                        : ego_helpers.asArray(CMD_ACTION, false);
 
                                 await Promise.resolve(
                                     vscode.commands.executeCommand
-                                        .apply(null, [ <any>CMD_ID ].concat(CMD_ARGS) )
+                                        .apply(null, [<any>CMD_ID].concat(CMD_ARGS))
                                 );
                             };
                         }
@@ -176,9 +172,7 @@ export async function reloadGlobalUserButtons() {
                                         // args.button
                                         Object.defineProperty(args, 'button', {
                                             enumerable: true,
-                                            get: () => {
-                                                return newButton;
-                                            }
+                                            get: () => newButton
                                         });
 
                                         return args;
@@ -191,7 +185,7 @@ export async function reloadGlobalUserButtons() {
 
                 if (commandAction) {
                     const ID = nextButtonCommandId++;
-                    const CMD_ID = `ego.power-tools.globalButtons.btn${ ID }`;
+                    const CMD_ID = `ego.power-tools.globalButtons.btn${ID}`;
 
                     newCommand = vscode.commands.registerCommand(CMD_ID, async () => {
                         try {
@@ -202,10 +196,10 @@ export async function reloadGlobalUserButtons() {
                             );
                         } catch (e) {
                             ego_log.CONSOLE
-                                   .trace(e, 'global.buttons.reloadGlobalUserButtons(2)');
+                                .trace(e, 'global.buttons.reloadGlobalUserButtons(2)');
 
                             ego_helpers.showErrorMessage(
-                                `Could not execute button: ${ ego_helpers.errorToString(e) }`
+                                `Could not execute button: ${ego_helpers.errorToString(e)}`
                             );
                         } finally {
                             newButton.command = CMD_ID;
@@ -249,7 +243,7 @@ export async function reloadGlobalUserButtons() {
             }
         } catch (e) {
             ego_log.CONSOLE
-                   .trace(e, 'global.buttons.reloadGlobalUserButtons(1)');
+                .trace(e, 'global.buttons.reloadGlobalUserButtons(1)');
         }
     });
 }

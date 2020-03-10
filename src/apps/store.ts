@@ -28,7 +28,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 
 
-interface App {
+interface IApp {
     name: string;
     displayName: string;
     description?: string;
@@ -39,19 +39,19 @@ interface App {
     upgradeSource?: string;
 }
 
-interface KnownAppList {
+interface IKnownAppList {
     apps: string[];
     lastCheck: string;
     store: string;
 }
 
-interface UninstallAppData {
+interface IUninstallAppData {
     name: string;
     source: string;
 }
 
 
- /**
+/**
   * A web view for an app store.
   */
 export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
@@ -88,14 +88,14 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
      * @inheritdoc
      */
     protected getTitle(): string {
-        return `App Store for 'vscode-powertools'`;
+        return 'App Store for \'vscode-powertools\'';
     }
 
     /**
      * @inheritdoc
      */
     protected getType(): string {
-        return `AppStore`;
+        return 'AppStore';
     }
 
     private async loadStoreFromUrl(appStoreUrl?: string): Promise<ego_contracts.AppStore> {
@@ -104,11 +104,11 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                 appStoreUrl = getAppStoreUrl(this.extension);
             }
 
-           return await vscode.window.withProgress({
+            return await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
             }, async (progress) => {
                 progress.report({
-                    message: `Loading app list from '${ appStoreUrl }' ...`,
+                    message: `Loading app list from '${appStoreUrl}' ...`,
                 });
 
                 return await loadStoreFrom(
@@ -120,7 +120,7 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                 throw e;
             } else {
                 ego_log.CONSOLE.trace(
-                    e, `apps.AppStoreWebView.loadStoreFromUrl(${ appStoreUrl })`
+                    e, `apps.AppStoreWebView.loadStoreFromUrl(${appStoreUrl})`
                 );
             }
         }
@@ -159,12 +159,12 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                                 location: vscode.ProgressLocation.Notification,
                             }, async (progress) => {
                                 progress.report({
-                                    message: `Download app from '${ APP_URL }' ...`,
+                                    message: `Download app from '${APP_URL}' ...`,
                                 });
 
                                 const RESPONSE = await ego_helpers.GET(APP_URL);
                                 if (RESPONSE.code < 200 || RESPONSE.code >= 300) {
-                                    throw new Error(`Unexpected response: [${ RESPONSE.code }] '${ RESPONSE.status }'`);
+                                    throw new Error(`Unexpected response: [${RESPONSE.code}] '${RESPONSE.status}'`);
                                 }
 
                                 app = await RESPONSE.readBody();
@@ -216,7 +216,7 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
 
             case 'reloadApps':
                 try {
-                    const APPS: App[] = [];
+                    const APPS: IApp[] = [];
                     let storeName: string;
 
                     // installed apps
@@ -367,9 +367,7 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                                     x.apps[0].upgradeSource =
                                         STORE_APPS.length > 1 ? STORE_APPS[0].source : undefined;
                                 })
-                                .select(x => {
-                                    return x.apps[0];
-                                })
+                                .select(x => x.apps[0])
                                 .orderBy(x => x.isInstalled ? 0 : 1)
                                 .thenBy(x => ego_helpers.normalizeString(x.displayName))
                                 .thenBy(x => ego_helpers.normalizeString(x.name))
@@ -392,7 +390,7 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
 
             case 'uninstallApp':
                 {
-                    const APP_TO_UNINSTALL: UninstallAppData = msg.data;
+                    const APP_TO_UNINSTALL: IUninstallAppData = msg.data;
                     if (_.isObjectLike(APP_TO_UNINSTALL)) {
                         if (!ego_helpers.isEmptyString(APP_TO_UNINSTALL.source)) {
                             const DIRS_WITH_APPS = ego_helpers.getAppsDir();
@@ -413,13 +411,13 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                                         );
 
                                         vscode.window.showInformationMessage(
-                                            `App '${ ego_helpers.toStringSafe(APP_TO_UNINSTALL.name) }' has been uninstalled.`
+                                            `App '${ego_helpers.toStringSafe(APP_TO_UNINSTALL.name)}' has been uninstalled.`
                                         );
                                     } catch (e) {
                                         err = e;
 
                                         vscode.window.showErrorMessage(
-                                            `Could not uninstall app '${ ego_helpers.toStringSafe(APP_TO_UNINSTALL.name) }': '${ ego_helpers.toStringSafe(e) }'`
+                                            `Could not uninstall app '${ego_helpers.toStringSafe(APP_TO_UNINSTALL.name)}': '${ego_helpers.toStringSafe(e)}'`
                                         );
                                     }
 
@@ -433,7 +431,7 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
                                 }
                             } else {
                                 vscode.window.showWarningMessage(
-                                    `Directory for app '${ ego_helpers.toStringSafe(APP_TO_UNINSTALL.name) }' not found!`
+                                    `Directory for app '${ego_helpers.toStringSafe(APP_TO_UNINSTALL.name)}' not found!`
                                 );
                             }
                         }
@@ -459,8 +457,8 @@ export class AppStoreWebView extends ego_webview.WebViewWithContextBase {
         };
 
         ego_helpers.EVENTS
-                   .on(ego_contracts.EVENT_APP_LIST_UPDATED,
-                       this._onAppListUpdatedEventFunction);
+            .on(ego_contracts.EVENT_APP_LIST_UPDATED,
+                this._onAppListUpdatedEventFunction);
 
         return await super.open();
     }
@@ -497,7 +495,7 @@ export async function checkForNewApps(
         location: vscode.ProgressLocation.Window,
     }, async (progress) => {
         progress.report({
-            message: `Checking for new apps ...`,
+            message: 'Checking for new apps ...',
         });
 
         const APP_STORE_URL = getAppStoreUrl(extension);
@@ -515,16 +513,16 @@ export async function checkForNewApps(
                     apps
                 )
             ).select(a => ego_helpers.normalizeString(a.name))
-             .where(a => '' !== a)
-             .distinct()
-             .order()
-             .toArray();
+                .where(a => '' !== a)
+                .distinct()
+                .order()
+                .toArray();
         };
 
-        let knownApps: KnownAppList = extension.globalState
-            .get<KnownAppList>(ego_contracts.KEY_KNOWN_APPS, null);
+        let knownApps: IKnownAppList = extension.globalState
+            .get<IKnownAppList>(ego_contracts.KEY_KNOWN_APPS, null);
 
-        let update = false;
+        let shouldUpdate = false;
         const ASYNC_REFRESH_ENTRY = async () => {
             knownApps = {
                 apps: await LOAD_APPS(),
@@ -532,7 +530,7 @@ export async function checkForNewApps(
                 store: APP_STORE_URL,
             };
 
-            update = true;
+            shouldUpdate = true;
         };
 
         if (knownApps) {
@@ -553,7 +551,7 @@ export async function checkForNewApps(
                         store: APP_STORE_URL,
                     };
 
-                    update = true;
+                    shouldUpdate = true;
                 }
             } else {
                 // new app store
@@ -564,7 +562,7 @@ export async function checkForNewApps(
             await ASYNC_REFRESH_ENTRY();
         }
 
-        if (update) {
+        if (shouldUpdate) {
             await extension.globalState
                 .update(ego_contracts.KEY_KNOWN_APPS, knownApps);
         }
@@ -600,7 +598,7 @@ async function loadStoreFrom(url: string, loadImports: boolean): Promise<ego_con
         timeout: 5000,
     });
     if (RESPONSE.code < 200 || RESPONSE.code >= 300) {
-        throw new Error(`Unexpected response: [${ RESPONSE.code }] '${ RESPONSE.status }'`);
+        throw new Error(`Unexpected response: [${RESPONSE.code}] '${RESPONSE.status}'`);
     }
 
     const APP_STORE: ego_contracts.AppStore = JSON.parse(
@@ -625,17 +623,17 @@ async function loadStoreFrom(url: string, loadImports: boolean): Promise<ego_con
             const IMPORTS = ego_helpers.from(
                 ego_helpers.asArray(APP_STORE.imports)
             ).select(x => ego_helpers.toStringSafe(x).trim())
-             .where(x => '' !== x)
-             .distinct()
-             .take(5)
-             .toArray();
+                .where(x => '' !== x)
+                .distinct()
+                .take(5)
+                .toArray();
 
             for (const I of IMPORTS) {
                 const SUB_STORE = await loadStoreFrom(I, false);
                 if (SUB_STORE) {
                     ego_helpers.from(
                         ego_helpers.asArray(SUB_STORE.apps)
-                    ).pushTo( APP_STORE.apps );
+                    ).pushTo(APP_STORE.apps);
                 }
             }
         }
