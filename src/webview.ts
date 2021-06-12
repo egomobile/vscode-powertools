@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -296,12 +296,12 @@ ${FOOTER}`;
         <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
             <div class="container">
                 <!-- Brand -->
-                <a class="navbar-brand waves-effect" href="https://www.e-go-digital.com/" target="_blank">
-                    <img src="${ this.getFileResourceUri('img/ego_digital.png')}" id="ego-logo">
+                <a class="navbar-brand waves-effect" href="https://www.e-go-mobile.com/" target="_blank">
+                    <img src="${ this.getFileResourceUri('img/ego.png')}" id="ego-logo">
                 </a>
 
                 <div id="ego-social-media-buttons">
-                    <a class="btn btn-sm btn-dark ego-social-media-btn" href="https://github.com/egodigital" target="_blank">
+                    <a class="btn btn-sm btn-dark ego-social-media-btn" href="https://github.com/egomobile" target="_blank">
                         <i class="fa fa-github" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -835,9 +835,6 @@ export function getVueHeader(opts?: GetVueHeaderOptions): string {
     }
     logo = ego_helpers.toStringSafe(logo)
         .trim();
-    if ('' === styleVuetify) {
-        logo = 'https://e-go-digital.com/site/templates/img/Logo-eGOdigital-RGB.svg';
-    }
 
     return `<!DOCTYPE html>
     <html>
@@ -901,12 +898,12 @@ ${extra}
         <v-app>
           <v-app-bar app clipped-left>
             <v-toolbar-title class="headline text-uppercase ml-8">
-              <a href="https://e-go-digital.com/" target="_blank" title="Visit e.GO Digital ...">
+              <a href="https://e-go-mobile.com/" target="_blank" title="Visit e.GO Digital ...">
                 <img src="${logo}" id="ego-logo" />
               </a>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn class="mr-8" fab dark small color="black" href="https://github.com/egodigital/vscode-powertools" target="_blank" title="Visit project on GitHub ...">
+            <v-btn class="mr-8" fab dark small color="black" href="https://github.com/egomobile/vscode-powertools" target="_blank" title="Visit project on GitHub ...">
               <v-icon dark>fab fa-github</v-icon>
             </v-btn>
           </v-app-bar>

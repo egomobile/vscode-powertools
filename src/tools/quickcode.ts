@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -1523,7 +1523,7 @@ async function showHelp_579c52a1992b472183db2fff8c764504() {
         md += '`$POST(url, body?, headers?)` | Starts a HTTP POST request. | `$POST("https://example.com/users/19790905")`\n';
         md += '`$PUT(url, body?, headers?)` | Starts a HTTP PUT request. | `$PUT("https://example.com/users/19790905")`\n';
         md += '`$pwd(length?, allowedChars?)` | Generates a password. | `$pwd(64)`\n';
-        md += '`$r(id)` | Extended [require() function](https://nodejs.org/api/modules.html#modules_require), which also allows to access the [modules of that extension](https://github.com/egodigital/vscode-powertools/blob/master/package.json). | `$r("moment").utc()`\n';
+        md += '`$r(id)` | Extended [require() function](https://nodejs.org/api/modules.html#modules_require), which also allows to access the [modules of that extension](https://github.com/egomobile/vscode-powertools/blob/master/package.json). | `$r("moment").utc()`\n';
         md += '`$read(file, enc?)` | Reads data from a file. Relative paths will be mapped to the directory of the currently opened editor or the `.vscode-powertools` sub folder inside the user\'s home directory. | `$read("myFile.txt")`\n';
         md += '`$res(val, mapper?)` | Resolves a value. | `$res( Promise.resolve("TM"), s => s.toLowerCase() )`\n';
         md += '`$rgb(rOrHex, g?, b?)` | Converts RGB color from or to hex. | `$rgb("ff0000")`\n';
@@ -1552,9 +1552,9 @@ async function showHelp_579c52a1992b472183db2fff8c764504() {
         md += '---- | ----------- | -------\n';
         md += '`_` | [lodash](https://lodash.com/) | `_.isString(5979)`\n';
         md += '`$fs` | [fs-extra](https://github.com/jprichardson/node-fs-extra) | `$fs.existsSync("/path/to/something")`\n';
-        md += '`$h` | [helpers](https://github.com/egodigital/vscode-powertools/blob/master/src/helpers.ts) | `$h.normalizeString("TM+MK")`\n';
+        md += '`$h` | [helpers](https://github.com/egomobile/vscode-powertools/blob/master/src/helpers.ts) | `$h.normalizeString("TM+MK")`\n';
         md += '`$m` | [Moment.js](https://momentjs.com/) | `$m()`\n';
-        md += '`$o` | [opn](https://www.npmjs.com/package/opn) | `$o("https://e-go-digital.com")`\n';
+        md += '`$o` | [opn](https://www.npmjs.com/package/opn) | `$o("https://e-go-mobile.com")`\n';
         md += '`$vs` | [Visual Studio Code API](https://code.visualstudio.com/api/references/vscode-api) | `$vs.commands.getCommands`\n';
         md += '\n';
     }

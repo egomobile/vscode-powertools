@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -1785,7 +1785,7 @@ export const APPS_SUBFOLDER = '.apps';
 /**
  * The URL to the (default) app store.
  */
-export const EGO_APP_STORE = 'https://egodigital.github.io/vscode-powertools/apps/store.json';
+export const EGO_APP_STORE = 'https://egomobile.github.io/vscode-powertools/apps/store.json';
 
 /**
  * Name of the event for a new app.

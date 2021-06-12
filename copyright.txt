@@ -8,8 +8,9 @@
 - /img/share/*
   - https://simplesharingbuttons.com
 
-- /src/res/img/ego_digital.png
-  - e.GO Digital GmbH (https://www.e-go-digital.com/)
+- /src/res/img/ego.png
+- /src/res/img/ego.svg
+  - Next.e.GO Mobile SE (https://www.e-go-mobile.com/)
 
 - /src/res/fonts/fa5/*
   - https://fontawesome.com/

@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -292,7 +292,9 @@ class Build {
     }
 
     public async openInBrowser() {
-        const BROWSER_URL = `https://egodigital.visualstudio.com/${
+        const BROWSER_URL = `https://${
+            encodeURIComponent(this.credentials.organization)
+        }.visualstudio.com/${
             encodeURIComponent(this.project.azureObject.name)
         }/_build/results?buildId=${
             encodeURIComponent(this.azureObject.id.toString())
@@ -316,7 +318,9 @@ class GitRepository {
     }
 
     public async openInBrowser() {
-        const BROWSER_URL = `https://egodigital.visualstudio.com/${
+        const BROWSER_URL = `https://${
+            encodeURIComponent(this.credentials.organization)
+        }.visualstudio.com/${
             encodeURIComponent(this.project.azureObject.name)
         }/_git/${
             encodeURIComponent(this.azureObject.name)
@@ -340,7 +344,9 @@ class Release {
     }
 
     public async openInBrowser() {
-        const BROWSER_URL = `https://egodigital.visualstudio.com/${
+        const BROWSER_URL = `https://${
+            encodeURIComponent(this.credentials.organization)
+        }.visualstudio.com/${
             encodeURIComponent(this.project.azureObject.name)
         }/_releaseProgress?releaseId=${
             encodeURIComponent(this.azureObject.id.toString())
@@ -438,7 +444,9 @@ class Board {
     }
 
     public async openInBrowser() {
-        const BROWSER_URL = `https://egodigital.visualstudio.com/${
+        const BROWSER_URL = `https://${
+            encodeURIComponent(this.credentials.organization)
+        }.visualstudio.com/${
             encodeURIComponent(this.team.project.azureObject.name)
         }/_boards/board/t/${
             encodeURIComponent(this.team.azureObject.name)

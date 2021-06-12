@@ -2,7 +2,7 @@
 
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -462,15 +462,13 @@ export async function activate(context: vscode.ExtensionContext) {
             outputChannel = vscode.window.createOutputChannel('Power Tools by e.GO')
         );
 
-        const NOW = ego_helpers.now();
-
         if (packageFile) {
             outputChannel.appendLine(`${packageFile.displayName} (${packageFile.name}) - v${packageFile.version}`);
         }
 
-        outputChannel.appendLine(`Copyright (c) 2018-${NOW.format('YYYY')}  e.GO Digital GmbH <hello@e-go-digital.com>`);
+        outputChannel.appendLine(`Copyright (c)  Next.e.GO Mobile SE`);
         outputChannel.appendLine('');
-        outputChannel.appendLine(`GitHub   : https://github.com/egodigital`);
+        outputChannel.appendLine(`GitHub   : https://github.com/egomobile`);
         outputChannel.appendLine(`Twitter  : https://twitter.com/ego_mobile_ag`);
         outputChannel.appendLine(`Facebook : https://facebook.com/egomobileag`);
         outputChannel.appendLine(`Instagram: https://instagram.com/egomobileag`);

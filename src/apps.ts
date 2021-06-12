@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -838,7 +838,7 @@ ${PARTS.script}
                 roboto: `${this.getFileResourceUri('css/roboto.css')}`,
             },
             images: {
-                logo: `${this.getFileResourceUri('img/ego_digital.png')}`,
+                logo: `${this.getFileResourceUri('img/ego.png')}`,
             },
             styles: {
                 app: `${this.getFileResourceUri('css/app.vuetify.css')}`,
@@ -1538,11 +1538,11 @@ SOFTWARE.`,
         README_FILE,
         `# ${HTML_ENCODER.encode(NAME)}
 
-${ ego_helpers.isEmptyString(description) ? 'This is an [Vuetify](https://vuetifyjs.com/) app for the [Visual Studio Code](https://code.visualstudio.com/) extension [Power Tools](https://marketplace.visualstudio.com/items?itemName=egodigital.vscode-powertools).' : HTML_ENCODER.encode(description)}
+${ ego_helpers.isEmptyString(description) ? 'This is an [Vuetify](https://vuetifyjs.com/) app for the [Visual Studio Code](https://code.visualstudio.com/) extension [Power Tools](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools).' : HTML_ENCODER.encode(description)}
 
 ## Usage
 
-Keep sure to have [vscode-powertools](https://marketplace.visualstudio.com/items?itemName=egodigital.vscode-powertools) installed.
+Keep sure to have [vscode-powertools](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools) installed.
 
 Then follow these steps:
 
@@ -1553,7 +1553,7 @@ Then follow these steps:
 
 ## Credits
 
-The app is powered by [vscode-powertools](https://marketplace.visualstudio.com/items?itemName=egodigital.vscode-powertools), created by [e.GO Digital](https://e-go-digital.com/).`,
+The app is powered by [vscode-powertools](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools), created by [Next.e.GO Mobile SE](https://e-go-mobile.com/).`,
         'utf8'
     );
 

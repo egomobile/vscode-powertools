@@ -1,6 +1,6 @@
 /**
  * This file is part of the vscode-powertools distribution.
- * Copyright (c) e.GO Digital GmbH, Aachen, Germany (https://www.e-go-digital.com/)
+ * Copyright (c) Next.e.GO Mobile SE, Aachen, Germany (https://www.e-go-mobile.com/)
  *
  * vscode-powertools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -345,7 +345,7 @@ ${PARTS.script}
                 roboto: `${this.getFileResourceUri('css/roboto.css')}`,
             },
             images: {
-                logo: `${this.getFileResourceUri('img/ego_digital.png')}`,
+                logo: `${this.getFileResourceUri('img/ego.png')}`,
             },
             styles: {
                 app: `${this.getFileResourceUri('css/app.vuetify.css')}`,
