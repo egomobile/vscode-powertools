@@ -44,7 +44,7 @@ Apps are [Node.js based scripts](https://nodejs.org/), which are running with a 
 
 ![demo-apps1.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-apps1.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Apps).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Apps).
 
 ### Buttons [[&uarr;](#how-to-use-)]
 
@@ -52,7 +52,7 @@ Buttons can be used to run tasks, like scripts or shell commands, by user's clic
 
 ![demo-button.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-buttons.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Buttons).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Buttons).
 
 ### Commands [[&uarr;](#how-to-use-)]
 
@@ -60,7 +60,7 @@ To enhance your editor, you can register custom [commands](https://code.visualst
 
 ![demo-commands.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-commands.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Commands).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Commands).
 
 ### Events [[&uarr;](#how-to-use-)]
 
@@ -68,7 +68,7 @@ The extension makes it possible to run tasks, like scripts, on specific events.
 
 ![demo-events.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-events.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Events).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Events).
 
 ### Jobs [[&uarr;](#how-to-use-)]
 
@@ -76,7 +76,7 @@ Jobs can be used to run tasks, like scripts or shell commands, periodically.
 
 ![demo-jobs.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-jobs.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Jobs).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Jobs).
 
 ### Scripts [[&uarr;](#how-to-use-)]
 
@@ -84,13 +84,13 @@ Scripts can be used to any kind of custom logic for a workspace.
 
 ![demo-scripts.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-scripts.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Scripts).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Scripts).
 
 ### Startups [[&uarr;](#how-to-use-)]
 
 *Startups* are similar to *Autostart* in Windows.
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Startups).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Startups).
 
 ### Tools [[&uarr;](#how-to-use-)]
 
@@ -98,7 +98,7 @@ A set of useful sub commands.
 
 ![demo-tools1.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-tools1.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Tools).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Tools).
 
 ### Values [[&uarr;](#how-to-use-)]
 
@@ -106,7 +106,7 @@ Values (or *placeholders*) can be used to define dynamic settings, e.g.
 
 ![demo-values.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-values.gif)
 
-For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Values).
+For more information, have a look at the [wiki](https://github.com/egodigital/vscode-powertools/wiki/Values).
 
 ## Documentation [[&uarr;](#table-of-contents)]
 
