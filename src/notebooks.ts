@@ -135,6 +135,8 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(options_6e52
     const _ = require('lodash');
     const $axios = require('axios').default;
     // @ts-ignore
+    const $fs = require('fs-extra');
+    // @ts-ignore
     const $helpers = require('./helpers');
     // @ts-ignore
     const $moment = require('moment');
