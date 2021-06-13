@@ -18,6 +18,7 @@ A swiss army knife with lots of tools, extensions and (scriptable) enhancements 
    * [Commands](#commands-)
    * [Events](#events-)
    * [Jobs](#jobs-)
+   * [Notebooks](#notebooks-)
    * [Scripts](#scripts-)
    * [Startups](#startups-)
    * [Tools](#tools-)
@@ -79,6 +80,12 @@ Jobs can be used to run tasks, like scripts or shell commands, periodically.
 ![demo-jobs.gif](https://raw.githubusercontent.com/egomobile/vscode-powertools/master/img/demo-jobs.gif)
 
 For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Jobs).
+
+### Notebooks [[&uarr;](#how-to-use-)]
+
+`e.GO Books` can execute JavaScript or CoffeeScript code to fetch data from any kind of source and format them in HTML, for example.
+
+For more information, have a look at the [wiki](https://github.com/egomobile/vscode-powertools/wiki/Notebooks).
 
 ### Scripts [[&uarr;](#how-to-use-)]
 
