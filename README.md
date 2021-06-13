@@ -7,6 +7,8 @@
 
 A swiss army knife with lots of tools, extensions and (scriptable) enhancements for [Visual Studio Code](https://code.visualstudio.com/).
 
+> :warning::warning::warning: **NOTICE:** If you have the [legacy version](https://marketplace.visualstudio.com/items?itemName=ego-digital.vscode-powertools) of that plugin installed, please backup and uninstall it first, before you install [this one](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools). You also need to upgrade to [Visual Studio 1.57](https://code.visualstudio.com/updates/v1_57) or later. :warning::warning::warning:
+
 ## Table of contents
 
 1. [Install](#install-)
@@ -31,7 +33,7 @@ A swiss army knife with lots of tools, extensions and (scriptable) enhancements 
 Launch VS Code Quick Open (`Ctrl + P`), paste the following command, and press enter:
 
 ```bash
-ext install vscode-powertools
+ext install egomobile.vscode-powertools
 ```
 
 Or search for things like `vscode-powertools` in your editor.
