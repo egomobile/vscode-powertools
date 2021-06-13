@@ -1,5 +1,12 @@
 # Change Log (vscode-powertools)
 
+## 0.66.0 (?? ??, ????; Notebooks)
+
+* [Notebook support](https://github.com/egomobile/vscode-powertools/wiki/Notebooks)
+* update [@slack/client](https://www.npmjs.com/package/@slack/client) to `^5.0.2`
+* update [pug](https://www.npmjs.com/package/pug) to `^3.0.2`
+* `npm update`
+
 ## 0.65.5 (June 13th, 2021; e.GO Mobile)
 
 * extension is now available at new location at [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools)
