@@ -34,7 +34,101 @@ interface IExecuteNotebookCellResult {
     result: any;
 }
 
-async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNotebookCellOptions): Promise<IExecuteNotebookCellResult> {
+/**
+ * Inits notebooks feature.
+ *
+ * @param {vscode.ExtensionContext} extension The extension context.
+ * @param {vscode.OutputChannel} outputChannel The output channel.
+ */
+export function initNotebooks(
+    extension: vscode.ExtensionContext,
+    outputChannel: vscode.OutputChannel,
+) {
+    extension.subscriptions.push(
+        // serialize/deserialize notebook
+        vscode.workspace.registerNotebookSerializer(
+            'egobook',
+            new EgoNotebookSerializer(),
+        )
+    );
+
+    // notebook controller
+    vscode.notebooks.createNotebookController(
+        'egobookController',
+        'egobook',
+        'Power Tools Notebook',
+        async (cells, notebook, controller) => {
+            for (let cell of cells) {
+                const execution = controller.createNotebookCellExecution(cell);
+                execution.start(moment.utc().valueOf());
+
+                let success = true;
+                let endTime: moment.Moment;
+                try {
+                    const code = cell.document.getText();
+
+                    const { output } = await executeNotebookCell_215681ac10354ef688493a03f8172f6d({
+                        cell,
+                        code,
+                        execution,
+                        extension,
+                        notebook,
+                        output: outputChannel,
+                    });
+
+                    endTime = moment.utc();
+
+                    execution.replaceOutput(output);
+                } catch (e) {
+                    endTime = moment.utc();
+
+                    success = false;
+
+                    let error: Error = e;
+                    if (!(error instanceof Error)) {
+                        error = new Error(`${e}`);
+                    }
+
+                    const errorOutputItem = vscode.NotebookCellOutputItem.error(error);
+
+                    const errorOutput = new vscode.NotebookCellOutput([errorOutputItem]);
+
+                    execution.replaceOutput(errorOutput);
+                } finally {
+                    execution.end(success, endTime.valueOf());
+                }
+            }
+        }
+    );
+}
+
+class EgoNotebookHttpRequestError extends Error {
+    public constructor(
+        public readonly response: AxiosResponse,
+        message?: string
+    ) {
+        super(message || `Server returned status code ${response.status}`);
+    }
+}
+
+class EgoNotebookSerializer implements vscode.NotebookSerializer {
+    public deserializeNotebook(content: Uint8Array): vscode.NotebookData {
+        const jsonStr = (new TextDecoder().decode(content)).trim();
+        if (!jsonStr.length) {
+            return {
+                cells: [],
+            };
+        }
+
+        return JSON.parse(jsonStr);
+    }
+
+    public serializeNotebook(data: vscode.NotebookData): Uint8Array {
+        return new TextEncoder().encode(JSON.stringify(data));
+    }
+}
+
+async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNotebookCellOptions): Promise<IExecuteNotebookCellResult> {
     // notebook cell output items
     const _fe5723d320884bc597386086ba5f1316: vscode.NotebookCellOutputItem[] = [];
 
@@ -167,6 +261,22 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
     };
 
     // @ts-ignore
+    const $csv = (csv: any, delimiter: any = ';', newLine: any = '\n') => {
+        csv = $str(csv);
+        delimiter = $str(delimiter);
+        newLine = $str(newLine);
+
+        return async () => {
+            const rows = await loadCSV_c8b508472ba64ecd8fb7d5671c0a33ec(csv, delimiter, newLine);
+            const html = toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows);
+
+            _fe5723d320884bc597386086ba5f1316.push(
+                vscode.NotebookCellOutputItem.text(html, 'text/html')
+            );
+        };
+    };
+
+    // @ts-ignore
     const $val = function (name: any, newValue?: any) {
         const key = $str(name).toLowerCase().trim();
 
@@ -235,13 +345,13 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
                 const coffeeScript = require('coffeescript');
 
                 _9deb012f277841a0995c1094c786c829 = () => {
-                    const runcScriptCode = $str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)
+                    const runScriptCode = $str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)
                         .split('\n')
                         .map(l => '    ' + l)
                         .join('\n');
 
                 const coffeeCode = `runScript_64ac464361e745b0851776eaab1c0dec = (tm_f6cf0fe2217144cd870d1af86a71a2be) ->
-${runcScriptCode}
+${runScriptCode}
 
 return runScript_64ac464361e745b0851776eaab1c0dec 19790905`;
 
@@ -321,96 +431,46 @@ ${$str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)}
     };
 }
 
-/**
- * Inits notebooks feature.
- *
- * @param {vscode.ExtensionContext} extension The extension context.
- * @param {vscode.OutputChannel} outputChannel The output channel.
- */
-export function initNotebooks(
-    extension: vscode.ExtensionContext,
-    outputChannel: vscode.OutputChannel,
-) {
-    extension.subscriptions.push(
-        // serialize/deserialize notebook
-        vscode.workspace.registerNotebookSerializer(
-            'egobook',
-            new EgoNotebookSerializer(),
-        )
-    );
+async function loadCSV_c8b508472ba64ecd8fb7d5671c0a33ec(
+    csv: string, delimiter: string, newLine: string
+): Promise<string[][]> {
+    const rows: string[][] = [];
 
-    // notebook controller
-    vscode.notebooks.createNotebookController(
-        'egobookController',
-        'egobook',
-        'Power Tools Notebook',
-        async (cells, notebook, controller) => {
-            for (let cell of cells) {
-                const execution = controller.createNotebookCellExecution(cell);
-                execution.start(moment.utc().valueOf());
+    csv.split(newLine).forEach(line => {
+        const newRow: string[] = [];
 
-                let success = true;
-                let endTime: moment.Moment;
-                try {
-                    const code = cell.document.getText();
+        newRow.push(...line.split(delimiter));
 
-                    const { output } = await executeNotebookCell({
-                        cell,
-                        code,
-                        execution,
-                        extension,
-                        notebook,
-                        output: outputChannel,
-                    });
+        rows.push(newRow);
+    });
 
-                    endTime = moment.utc();
-
-                    execution.replaceOutput(output);
-                } catch (e) {
-                    endTime = moment.utc();
-
-                    success = false;
-
-                    let error: Error = e;
-                    if (!(error instanceof Error)) {
-                        error = new Error(`${e}`);
-                    }
-
-                    const errorOutputItem = vscode.NotebookCellOutputItem.error(error);
-
-                    const errorOutput = new vscode.NotebookCellOutput([errorOutputItem]);
-
-                    execution.replaceOutput(errorOutput);
-                } finally {
-                    execution.end(success, endTime.valueOf());
-                }
-            }
-        }
-    );
+    return rows;
 }
 
-class EgoNotebookHttpRequestError extends Error {
-    public constructor(
-        public readonly response: AxiosResponse,
-        message?: string
-    ) {
-        super(message || `Server returned status code ${response.status}`);
-    }
-}
+function toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows: any[][]): string {
+    const helpers = require('./helpers');
 
-class EgoNotebookSerializer implements vscode.NotebookSerializer {
-    public deserializeNotebook(content: Uint8Array): vscode.NotebookData {
-        const jsonStr = (new TextDecoder().decode(content)).trim();
-        if (!jsonStr.length) {
-            return {
-                cells: [],
-            };
+    let html = '';
+
+    html += '<table>';
+    html += '<tbody>';
+    rows.filter(r => Array.isArray(r)).forEach((row: any[], index: number) => {
+        html += '<tr>';
+        if (row) {
+            const cellTag = index > 0 ? 'td' : 'th';
+
+            html += `<${cellTag}>${ index + 1 }</${cellTag}>`;
+
+            row.forEach(cell => {
+                html += `<${cellTag}>`;
+                html += helpers.escapeMarkdown(cell);
+                html += `</${cellTag}>`;
+            });
         }
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    html += '</table>';
 
-        return JSON.parse(jsonStr);
-    }
-
-    public serializeNotebook(data: vscode.NotebookData): Uint8Array {
-        return new TextEncoder().encode(JSON.stringify(data));
-    }
+    return html;
 }
