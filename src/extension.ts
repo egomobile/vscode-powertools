@@ -27,6 +27,7 @@ import * as ego_global_config from './global/config';
 import * as ego_global_values from './global/values';
 import * as ego_helpers from './helpers';
 import * as ego_log from './log';
+import * as ego_notebooks from './notebooks';
 import * as ego_states from './states';
 import * as ego_stores from './stores';
 import * as ego_tools_proxies from './tools/proxies';
@@ -37,7 +38,25 @@ import * as ego_workspaces_buttons from './workspaces/buttons';
 import * as ego_workspaces_commands from './workspaces/commands';
 import * as os from 'os';
 import * as path from 'path';
+import * as showdown from 'showdown';
 import * as vscode from 'vscode';
+
+// Showdown
+{
+    showdown.setFlavor('github');
+
+    showdown.setOption('completeHTMLDocument', false);
+    showdown.setOption('encodeEmails', true);
+    showdown.setOption('ghCodeBlocks', true);
+    showdown.setOption('ghCompatibleHeaderId', true);
+    showdown.setOption('headerLevelStart', 3);
+    showdown.setOption('openLinksInNewWindow', true);
+    showdown.setOption('simpleLineBreaks', true);
+    showdown.setOption('simplifiedAutoLink', true);
+    showdown.setOption('strikethrough', true);
+    showdown.setOption('tables', true);
+    showdown.setOption('tasklists', true);
+}
 
 
 let currentContext: vscode.ExtensionContext;
@@ -569,9 +588,15 @@ export async function activate(context: vscode.ExtensionContext) {
         );
     });
 
-    // global extension commands
+    // global stuff
     WF.next(() => {
+        // commands
         ego_commands.registerCommands(
+            context, outputChannel
+        );
+
+        // notebooks
+        ego_notebooks.initNotebooks(
             context, outputChannel
         );
     });
