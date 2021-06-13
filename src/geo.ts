@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as deepMerge from 'deepmerge';
+const deepMerge = require('deepmerge');
 import * as ego_contracts from './contracts';
 import * as ego_helpers from './helpers';
 import * as ego_settings_global from './settings/global';

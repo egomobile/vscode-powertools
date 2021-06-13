@@ -16,7 +16,7 @@
  */
 
 import * as _ from 'lodash';
-import * as csvParse from 'csv-parse';
+const csvParse = require('csv-parse');
 import * as ego_helpers from './helpers';
 import * as ego_webview from './webview';
 import * as htmlEntities from 'html-entities';
@@ -30,11 +30,11 @@ export class CsvTableWebView extends ego_webview.WebViewBase {
      * Initializes a new instance of that class.
      *
      * @param {any} csv The CSV data.
-     * @param {csvParse.Options} [parserOptions] Custom parser options.
+     * @param {any} [parserOptions] Custom parser options.
      */
     public constructor(
         public readonly csv: any,
-        public readonly parserOptions?: csvParse.Options
+        public readonly parserOptions?: any
     ) {
         super();
 

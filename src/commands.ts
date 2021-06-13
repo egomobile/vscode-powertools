@@ -35,7 +35,7 @@ import * as fs from 'fs';
 import * as fsExtra from 'fs-extra';
 const geodist = require('geodist');
 const hexy = require('hexy');
-import * as moment from 'moment';
+const moment = require('moment');
 import * as path from 'path';
 import * as toml from 'toml';
 import * as vscode from 'vscode';
