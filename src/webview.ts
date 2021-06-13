@@ -898,7 +898,7 @@ ${extra}
         <v-app>
           <v-app-bar app clipped-left>
             <v-toolbar-title class="headline text-uppercase ml-8">
-              <a href="https://e-go-mobile.com/" target="_blank" title="Visit e.GO Digital ...">
+              <a href="https://e-go-mobile.com/" target="_blank" title="Visit e.GO Mobile ...">
                 <img src="${logo}" id="ego-logo" />
               </a>
             </v-toolbar-title>

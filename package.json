@@ -3,7 +3,7 @@
     "publisher": "egomobile",
     "displayName": "Power Tools",
     "description": "A set of useful and handy tools for Visual Studio Code.",
-    "version": "0.65.0",
+    "version": "0.65.1",
     "engines": {
         "vscode": "^1.57.0"
     },
@@ -2132,7 +2132,7 @@
         "build": "(rm -r ./out || true) && (\"./node_modules/.bin/tsc\" -p ./) && (mkdir \"./out/res\") && (cp -r ./src/res/* ./out/res)",
         "compile": "tsc -p ./",
         "deploy": "node ./deploy.js",
-        "doc": "(rm -r ./doc || true) && (\"./node_modules/.bin/typedoc\" --out ./doc ./src)",
+        "doc": "(rm -r ./doc || true) && (typedoc --out ./doc ./src)",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "sync:package": "node ./syncPackageJSON.js",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
@@ -2176,7 +2176,7 @@
         "vsce": "^1.93.0",
         "vscode": "^1.1.37"
     },
-    "author": "e.GO Digital GmbH, Aachen, Germany",
+    "author": "Next.e.GO Mobile SE, Aachen, Germany",
     "license": "LGPL-3.0",
     "homepage": "https://github.com/egomobile/vscode-powertools#readme",
     "keywords": [

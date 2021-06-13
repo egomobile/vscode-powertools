@@ -79,7 +79,7 @@ export class HelpViewView extends ego_webview.WebViewWithContextBase {
                             .split(' ')
                             .join('-');
                         if ('' !== pageName) {
-                            let url = `https://github.com/egodigital/vscode-powertools/wiki/${ encodeURIComponent(pageName) }.md`;
+                            let url = `https://github.com/egomobile/vscode-powertools/wiki/${ encodeURIComponent(pageName) }.md`;
 
                             let depth = 0;
                             let response: ego_helpers.HTTPRequestResult;

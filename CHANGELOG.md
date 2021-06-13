@@ -1,8 +1,8 @@
 # Change Log (vscode-powertools)
 
-## 0.65.0 (June 13th, 2021; e.GO Mobile)
+## 0.65.1 (June 13th, 2021; e.GO Mobile)
 
-* extension is now available at new location at [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ego-digital.vscode-powertools)
+* extension is now available at new location at [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools)
 * extension requires at least [Visual Studio Code 1.57](https://code.visualstudio.com/updates/v1_57) now
 * bugfixes
 * `npm update`
