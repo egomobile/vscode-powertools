@@ -128,9 +128,9 @@ class EgoNotebookSerializer implements vscode.NotebookSerializer {
     }
 }
 
-async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNotebookCellOptions): Promise<IExecuteNotebookCellResult> {
+async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(options_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNotebookCellOptions): Promise<IExecuteNotebookCellResult> {
     // notebook cell output items
-    const _fe5723d320884bc597386086ba5f1316: vscode.NotebookCellOutputItem[] = [];
+    const cellOutputs_fe5723d320884bc597386086ba5f1316: vscode.NotebookCellOutputItem[] = [];
 
     const _ = require('lodash');
     const $axios = require('axios').default;
@@ -170,6 +170,11 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
         return String(val);
     };
 
+    // @ts-ignore
+    const $escape = (val: any) => {
+        return require('escape-html')($str(val));
+    };
+
     const $request = (method: any, url: any, ...args: any[]) => {
         method = $str(method).toLowerCase().trim();
         url = $str(url);
@@ -196,7 +201,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
     // data directly, if no error
     //
     // otherwise an exception is thrown
-    const _9cf0115f617d4a87848db0a649c4bfd4 = async (...args: any[]) => {
+    const getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4 = async (...args: any[]) => {
         const contentType = require('content-type');
 
         const response: AxiosResponse = await ($request as any)(...args);
@@ -207,6 +212,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
 
         let data: any = response.data;
 
+        // try to detect MIME type and charset
         let charset: string | null | undefined;
         let type: string | null | undefined;
         try {
@@ -227,12 +233,22 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
         if (!type?.length) {
             type = 'application/octet-stream';
         }
-
+    
         if (Buffer.isBuffer(data)) {
-            if (type.endsWith('/json')) {
+            const getBufferAsString = () => {
                 try {
-                    data = JSON.parse(data.toString('utf8'));
+                    return data.toString(charset);
+                } catch {
+                    return data.toString();
+                }
+            };
+
+            if (type.endsWith('/json')) {  // JSON?
+                try {
+                    data = JSON.parse(getBufferAsString());
                 } catch { }
+            } else if (type.startsWith('text/')) {  // text?
+                data = JSON.parse(getBufferAsString());
             }
         }
 
@@ -241,23 +257,23 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
 
     // @ts-ignore
     const $delete = (url: any, data?: any, headers?: any) => {
-        return _9cf0115f617d4a87848db0a649c4bfd4('delete', url, data, headers);
+        return getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4('delete', url, data, headers);
     };
     // @ts-ignore
     const $get = (url: any, headers?: any) => {
-        return _9cf0115f617d4a87848db0a649c4bfd4('get', url, headers);
+        return getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4('get', url, headers);
     };
     // @ts-ignore
     const $patch = (url: any, data?: any, headers?: any) => {
-        return _9cf0115f617d4a87848db0a649c4bfd4('patch', url, data, headers);
+        return getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4('patch', url, data, headers);
     };
     // @ts-ignore
     const $post = (url: any, data?: any, headers?: any) => {
-        return _9cf0115f617d4a87848db0a649c4bfd4('post', url, data, headers);
+        return getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4('post', url, data, headers);
     };
     // @ts-ignore
     const $put = (url: any, data?: any, headers?: any) => {
-        return _9cf0115f617d4a87848db0a649c4bfd4('put', url, data, headers);
+        return getHttpResponseData_9cf0115f617d4a87848db0a649c4bfd4('put', url, data, headers);
     };
 
     // @ts-ignore
@@ -270,7 +286,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
             const rows = await loadCSV_c8b508472ba64ecd8fb7d5671c0a33ec(csv, delimiter, newLine);
             const html = toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows);
 
-            _fe5723d320884bc597386086ba5f1316.push(
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(
                 vscode.NotebookCellOutputItem.text(html, 'text/html')
             );
         };
@@ -281,7 +297,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
         const key = $str(name).toLowerCase().trim();
 
         if (arguments.length < 2) {
-            return _6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key];
+            return options_6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key];
         }
 
         return new Promise<void>(async () => {
@@ -291,9 +307,9 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
             }
 
             if (typeof value === 'undefined') {
-                delete _6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key];
+                delete options_6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key];
             } else {
-                _6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key] = value;
+                options_6e526da69a9f4bb791d2ba5f64e7ab48.notebook.metadata[key] = value;
             }
         });
     };
@@ -306,11 +322,11 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
 
         const newHtmlOutputItem = vscode.NotebookCellOutputItem.text(html, 'text/html');
 
-        let htmlOutputIndex = _fe5723d320884bc597386086ba5f1316.findIndex(o => o.mime === 'text/html');
+        const htmlOutputIndex = cellOutputs_fe5723d320884bc597386086ba5f1316.findIndex(o => o.mime === 'text/html');
         if (htmlOutputIndex > -1) {
-            _fe5723d320884bc597386086ba5f1316[htmlOutputIndex] = newHtmlOutputItem;
+            cellOutputs_fe5723d320884bc597386086ba5f1316[htmlOutputIndex] = newHtmlOutputItem;
         } else {
-            _fe5723d320884bc597386086ba5f1316.push(newHtmlOutputItem);
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(newHtmlOutputItem);
         }
     };
     // @ts-ignore
@@ -329,11 +345,11 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
 
         const newTextOutputItem = vscode.NotebookCellOutputItem.text(text, 'text/plain');
 
-        let textOutputIndex = _fe5723d320884bc597386086ba5f1316.findIndex(o => o.mime === 'text/plain');
+        const textOutputIndex = cellOutputs_fe5723d320884bc597386086ba5f1316.findIndex(o => o.mime === 'text/plain');
         if (textOutputIndex > -1) {
-            _fe5723d320884bc597386086ba5f1316[textOutputIndex] = newTextOutputItem;
+            cellOutputs_fe5723d320884bc597386086ba5f1316[textOutputIndex] = newTextOutputItem;
         } else {
-            _fe5723d320884bc597386086ba5f1316.push(newTextOutputItem);
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(newTextOutputItem);
         }
     };
 
@@ -343,28 +359,28 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
     };
 
     // code executor
-    let _9deb012f277841a0995c1094c786c829: () => Promise<any>;
-    switch ($str(_6e526da69a9f4bb791d2ba5f64e7ab48.cell.document.languageId).toLowerCase().trim()) {
+    let executeCode_9deb012f277841a0995c1094c786c829: () => Promise<any>;
+    switch ($str(options_6e526da69a9f4bb791d2ba5f64e7ab48.cell.document.languageId).toLowerCase().trim()) {
         case 'coffeescript':
             {
                 const coffeeScript = require('coffeescript');
 
-                _9deb012f277841a0995c1094c786c829 = () => {
-                    const runScriptCode = $str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)
+                executeCode_9deb012f277841a0995c1094c786c829 = () => {
+                    const runScriptCode = $str(options_6e526da69a9f4bb791d2ba5f64e7ab48.code)
                         .split('\n')
                         .map(l => '    ' + l)
                         .join('\n');
 
-                const coffeeCode = `runScript_64ac464361e745b0851776eaab1c0dec = (tm_f6cf0fe2217144cd870d1af86a71a2be) ->
+                    const coffeeCode = `runScript_64ac464361e745b0851776eaab1c0dec = (tm_f6cf0fe2217144cd870d1af86a71a2be) ->
 ${runScriptCode}
 
 return runScript_64ac464361e745b0851776eaab1c0dec 19790905`;
 
-                const jsCode = coffeeScript.compile(coffeeCode, {
-                    bare: true,
-                });
+                    const jsCode = coffeeScript.compile(coffeeCode, {
+                        bare: true,
+                    });
 
-                return eval(`(async () => {
+                    return eval(`(async () => {
 
 ${jsCode}
 
@@ -375,26 +391,28 @@ ${jsCode}
 
         default:
             // default: JavaScript
-            _9deb012f277841a0995c1094c786c829 = () => eval(`(async () => {
+            executeCode_9deb012f277841a0995c1094c786c829 = () => eval(`(async () => {
 
-${$str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)}
+${$str(options_6e526da69a9f4bb791d2ba5f64e7ab48.code)}
 
 })()`);
             break;
     }
 
     // execute code
-    let result: any = await Promise.resolve(_9deb012f277841a0995c1094c786c829());
+    let result: any = await Promise.resolve(executeCode_9deb012f277841a0995c1094c786c829());
 
     if (!_.isNil(result)) {
         if (typeof result === 'function') {
             result = await Promise.resolve(result());
         }
 
-        const addAsTextResult = () => {
-            const newTextOutputItem = vscode.NotebookCellOutputItem.text($str(result));
+        const addAsHexResult = () => {
+            const hexy = require('hexy');
 
-            _fe5723d320884bc597386086ba5f1316.push(newTextOutputItem);
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(
+                vscode.NotebookCellOutputItem.text(hexy.hexy(result), 'text/plain')
+            );
         };
 
         if (Buffer.isBuffer(result)) {
@@ -403,32 +421,36 @@ ${$str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)}
             try {
                 const type = await fileType.fromBuffer(result);
 
-                const mime = $str(type.mime).toLowerCase().trim();
+                const mime = $str(type?.mime).toLowerCase().trim();
 
                 if (mime.startsWith('image/')) {  // display as image?
                     const dataUrl = `data:${mime};base64,${result.toString('base64')}`;
                     const html = `<img src="${dataUrl}" style="max-width: 800px; max-height: 600px;" />`;
 
-                    _fe5723d320884bc597386086ba5f1316.push(
+                    cellOutputs_fe5723d320884bc597386086ba5f1316.push(
                         vscode.NotebookCellOutputItem.text(html, 'text/html')
                     );
                 } else {
-                    addAsTextResult();
+                    addAsHexResult();  // fallback
                 }
             } catch (ex) {
-                addAsTextResult();
+                addAsHexResult();  // fallback
             }
-        } else if (typeof result === 'object') {
-            const newJsonOutputItem = vscode.NotebookCellOutputItem.json(result);
-
-            _fe5723d320884bc597386086ba5f1316.push(newJsonOutputItem);
+        } else if (typeof result === 'object') {  // JSON object
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(
+                vscode.NotebookCellOutputItem.json(result)
+            );
+        } else if (typeof result === 'string') {  // text
+            cellOutputs_fe5723d320884bc597386086ba5f1316.push(
+                vscode.NotebookCellOutputItem.text(result, 'text/plain')
+            );
         } else {
-            addAsTextResult();
+            addAsHexResult();  // fallback
         }
     }
 
     // define output
-    const output = new vscode.NotebookCellOutput(_fe5723d320884bc597386086ba5f1316);
+    const output = new vscode.NotebookCellOutput(cellOutputs_fe5723d320884bc597386086ba5f1316);
 
     return {
         output,
@@ -453,7 +475,7 @@ async function loadCSV_c8b508472ba64ecd8fb7d5671c0a33ec(
 }
 
 function toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows: any[][]): string {
-    const helpers = require('./helpers');
+    const escapeHtml = require('escape-html');
 
     let html = '';
 
@@ -469,7 +491,7 @@ function toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows: any[][]): string {
 
             row.forEach(cell => {
                 html += `<${cellTag}>`;
-                html += helpers.escapeMarkdown(cell);
+                html += escapeHtml(cell);
                 html += `</${cellTag}>`;
             });
         }
