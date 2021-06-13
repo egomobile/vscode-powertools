@@ -52,7 +52,29 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
         validateStatus: () => true,
     });
 
-    const $str = (val: any): string => $helpers.toStringSafe(val);
+    const $str = (val: any): string => {
+        if (typeof val === 'string') {
+            return val;
+        }
+
+        if (_.isNil(val)) {
+            return '';
+        }
+
+        if (Buffer.isBuffer(val)) {
+            return val.toString('utf8');
+        }
+
+        if (typeof val['toString'] === 'function') {
+            return String(val.toString());
+        }
+
+        if (typeof val['toString'] === 'object') {
+            return JSON.stringify(val, null, 2);
+        }
+
+        return String(val);
+    };
 
     const $request = (method: any, url: any, ...args: any[]) => {
         method = $str(method).toLowerCase().trim();
@@ -157,7 +179,6 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
 
         return $setHtml(html);
     };
-
 
     // @ts-ignore
     const $setText = (text: any) => {
