@@ -136,7 +136,7 @@ export async function _exec_fcac50a111604220b8173024b6925905(
             }
 
             if (Buffer.isBuffer(val)) {
-                return val.toString(enc);
+                return val.toString(enc as any);
             }
 
             return $h.toStringSafe(

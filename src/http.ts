@@ -144,7 +144,7 @@ export class HttpResponseWebView extends ego_webview.WebViewBase {
             if (false === bodyToAppend) {
                 try {
                     const OBJ = JSON.parse(
-                        BODY.toString(CHARSET)
+                        BODY.toString(CHARSET as any)
                     );
 
                     bodyToAppend = JSON.stringify(
@@ -159,15 +159,15 @@ export class HttpResponseWebView extends ego_webview.WebViewBase {
                     if ('' !== CONTENT_TYPE) {
                         if (CONTENT_TYPE.startsWith('text/html') || CONTENT_TYPE.startsWith('text/xml')) {
                             bodyToAppend = beautify.html(
-                                BODY.toString(CHARSET)
+                                BODY.toString(CHARSET as any)
                             );
                         } else if (CONTENT_TYPE.startsWith('text/css')) {
                             bodyToAppend = beautify.css(
-                                BODY.toString(CHARSET)
+                                BODY.toString(CHARSET as any)
                             );
                         } else if (CONTENT_TYPE.startsWith('text/javascript')) {
                             bodyToAppend = beautify.js(
-                                BODY.toString(CHARSET)
+                                BODY.toString(CHARSET as any)
                             );
                         }
                     }
@@ -175,7 +175,7 @@ export class HttpResponseWebView extends ego_webview.WebViewBase {
             }
 
             if (false === bodyToAppend) {
-                bodyToAppend = BODY.toString(CHARSET);
+                bodyToAppend = BODY.toString(CHARSET as any);
             }
 
             this.httpResponse += bodyToAppend;
@@ -195,7 +195,7 @@ export class HttpResponseWebView extends ego_webview.WebViewBase {
 
                         await vscode.env.clipboard.writeText(
                             BODY.toString(
-                                this.getCharSet()
+                                this.getCharSet() as any
                             )
                         );
 

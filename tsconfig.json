@@ -15,7 +15,8 @@
         "removeComments": false,
         "allowUnreachableCode": false,
         "noImplicitAny": false,
-        "pretty": false
+        "pretty": false,
+        "esModuleInterop": true
     },
     "exclude": [
         "node_modules",
