@@ -337,6 +337,11 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(_6e526da69a9
         }
     };
 
+    // @ts-ignore
+    const $require = (id: any) => {
+        return $helpers.requireModule(id);
+    };
+
     // code executor
     let _9deb012f277841a0995c1094c786c829: () => Promise<any>;
     switch ($str(_6e526da69a9f4bb791d2ba5f64e7ab48.cell.document.languageId).toLowerCase().trim()) {
@@ -458,8 +463,9 @@ function toHTMLTable_0d937cb5e098468fb621b65f5d2c6506(rows: any[][]): string {
         html += '<tr>';
         if (row) {
             const cellTag = index > 0 ? 'td' : 'th';
+            const rowNr = index > 0 ? String(index) : '';
 
-            html += `<${cellTag}>${ index + 1 }</${cellTag}>`;
+            html += `<${cellTag}>${rowNr}</${cellTag}>`;
 
             row.forEach(cell => {
                 html += `<${cellTag}>`;
