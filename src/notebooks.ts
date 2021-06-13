@@ -94,6 +94,7 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
             method,
             headers,
             data,
+            responseType: 'arraybuffer'
         });
     };
 
@@ -102,14 +103,46 @@ async function executeNotebookCell(_6e526da69a9f4bb791d2ba5f64e7ab48: IExecuteNo
     //
     // otherwise an exception is thrown
     const _9cf0115f617d4a87848db0a649c4bfd4 = async (...args: any[]) => {
-        const response: AxiosResponse = ($request as any)(...args);
+        const contentType = require('content-type');
+
+        const response: AxiosResponse = await ($request as any)(...args);
 
         if (response.status >= 400) {
             throw new EgoNotebookHttpRequestError(response);
         }
 
+        let data: any = response.data;
 
-        return response.data;
+        let charset: string | null | undefined;
+        let type: string | null | undefined;
+        try {
+            const mime = contentType.parse(
+                $str(response.headers['content-type']).toLowerCase().trim()
+            );
+
+            charset = mime.parameters?.['charset'];
+            charset = mime.type;
+        } catch { }
+
+        charset = charset?.toLowerCase().trim();
+        type = type?.toLowerCase().trim();
+
+        if (!charset?.length) {
+            charset = 'utf8';
+        }
+        if (!type?.length) {
+            type = 'application/octet-stream';
+        }
+
+        if (Buffer.isBuffer(data)) {
+            if (type.endsWith('/json')) {
+                try {
+                    data = JSON.parse(data.toString('utf8'));
+                } catch { }
+            }
+        }
+
+        return data;
     };
 
     // @ts-ignore
@@ -236,12 +269,47 @@ ${$str(_6e526da69a9f4bb791d2ba5f64e7ab48.code)}
     }
 
     // execute code
-    const result = await Promise.resolve(_9deb012f277841a0995c1094c786c829());
+    let result: any = await Promise.resolve(_9deb012f277841a0995c1094c786c829());
 
     if (!_.isNil(result)) {
-        const newJsonOutputItem = vscode.NotebookCellOutputItem.json(result);
+        if (typeof result === 'function') {
+            result = await Promise.resolve(result());
+        }
 
-        _fe5723d320884bc597386086ba5f1316.push(newJsonOutputItem);
+        const addAsTextResult = () => {
+            const newTextOutputItem = vscode.NotebookCellOutputItem.text($str(result));
+
+            _fe5723d320884bc597386086ba5f1316.push(newTextOutputItem);
+        };
+
+        if (Buffer.isBuffer(result)) {
+            const fileType = require('file-type');
+
+            try {
+                const type = await fileType.fromBuffer(result);
+
+                const mime = $str(type.mime).toLowerCase().trim();
+
+                if (mime.startsWith('image/')) {  // display as image?
+                    const dataUrl = `data:${mime};base64,${result.toString('base64')}`;
+                    const html = `<img src="${dataUrl}" style="max-width: 800px; max-height: 600px;" />`;
+
+                    _fe5723d320884bc597386086ba5f1316.push(
+                        vscode.NotebookCellOutputItem.text(html, 'text/html')
+                    );
+                } else {
+                    addAsTextResult();
+                }
+            } catch (ex) {
+                addAsTextResult();
+            }
+        } else if (typeof result === 'object') {
+            const newJsonOutputItem = vscode.NotebookCellOutputItem.json(result);
+
+            _fe5723d320884bc597386086ba5f1316.push(newJsonOutputItem);
+        } else {
+            addAsTextResult();
+        }
     }
 
     // define output
