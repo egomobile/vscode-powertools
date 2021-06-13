@@ -2178,7 +2178,6 @@
         "@types/pug": "^2.0.4",
         "@types/sanitize-filename": "^1.6.3",
         "@types/sass": "^1.16.0",
-        "@types/showdown": "^1.9.3",
         "@types/tmp": "0.0.33",
         "@types/uuid": "^3.4.9",
         "@types/xlsx": "0.0.36",

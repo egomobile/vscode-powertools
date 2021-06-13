@@ -38,7 +38,7 @@ import * as ego_workspaces_buttons from './workspaces/buttons';
 import * as ego_workspaces_commands from './workspaces/commands';
 import * as os from 'os';
 import * as path from 'path';
-import * as showdown from 'showdown';
+const showdown = require('showdown');
 import * as vscode from 'vscode';
 
 // Showdown
