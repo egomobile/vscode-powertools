@@ -1,5 +1,11 @@
 # Change Log (vscode-powertools)
 
+## 0.66.0 (August 1st, 2021; logo and npm updates)
+
+* extension requires at least [Visual Studio Code 1.58](https://code.visualstudio.com/updates/v1_58) now
+* update logos
+* `npm update`
+
 ## 0.65.5 (June 13th, 2021; e.GO Mobile)
 
 * extension is now available at new location at [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=egomobile.vscode-powertools)
