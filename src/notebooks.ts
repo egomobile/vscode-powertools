@@ -165,7 +165,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(options_6e52
             return String(val.toString());
         }
 
-        if (typeof val['toString'] === 'object') {
+        if (typeof val === 'object') {
             return JSON.stringify(val, null, 2);
         }
 
@@ -223,7 +223,7 @@ async function executeNotebookCell_215681ac10354ef688493a03f8172f6d(options_6e52
             );
 
             charset = mime.parameters?.['charset'];
-            charset = mime.type;
+            type = mime.type;
         } catch { }
 
         charset = charset?.toLowerCase().trim();
