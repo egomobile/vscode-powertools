@@ -29,7 +29,7 @@ async function deployToMarketplace(pat) {
 
 async function deployToOpenVSX(token) {
     await ovsx.publish({
-        packagePath: cwd,
+        packagePath: __dirname,
         pat: token,
         yarn: false,
     });
