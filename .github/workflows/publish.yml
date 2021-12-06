@@ -17,4 +17,5 @@ jobs:
       - run: npm run build
       - run: npm run deploy
         env:
+          OPENVSX_AUTH_TOKEN: ${{secrets.OPENVSX_SECRET}}
           VSCE_AUTH_TOKEN: ${{secrets.VSCE_TOKEN}}

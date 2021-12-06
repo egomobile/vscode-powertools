@@ -42,13 +42,13 @@ async function deployToOpenVSX(token) {
             throw new Error(`No Personal Access Token in 'VSCE_AUTH_TOKEN' defined!`);
         }
 
-        const OPENVSX_SECRET = process.env.OPENVSX_SECRET.trim();
-        if ('' === OPENVSX_SECRET) {
-            throw new Error(`No Open VSX Access Token in 'OPENVSX_SECRET' defined!`);
+        const OPENVSX_AUTH_TOKEN = process.env.OPENVSX_AUTH_TOKEN.trim();
+        if ('' === OPENVSX_AUTH_TOKEN) {
+            throw new Error(`No Open VSX Access Token in 'OPENVSX_AUTH_TOKEN' defined!`);
         }
 
         await deployToMarketplace(VSCE_AUTH_TOKEN);
-        await deployToOpenVSX(OPENVSX_SECRET);
+        await deployToOpenVSX(OPENVSX_AUTH_TOKEN);
     } catch (e) {
         console.error(e);
 
