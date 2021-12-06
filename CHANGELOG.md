@@ -1,5 +1,9 @@
 # Change Log (vscode-powertools)
 
+## 0.67.0 (December 6th, 2021; Open VSX support)
+
+* now also deploy to [open-vsx.org](https://open-vsx.org/), s. [PR #6](https://github.com/egomobile/vscode-powertools/issues/6) by [Michoel Chaikin](https://github.com/michoelchaikin)
+
 ## 0.66.0 (August 1st, 2021; logo and npm updates)
 
 * extension requires at least [Visual Studio Code 1.58](https://code.visualstudio.com/updates/v1_58) now

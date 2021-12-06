@@ -15,20 +15,40 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+const child_process = require('child_process');
+const ovsx = require('ovsx');
 const vsce = require('vsce');
+
+async function deployToMarketplace(pat) {
+    await vsce.publish({
+        cwd: __dirname,
+        pat,
+        useYarn: false,
+    });
+}
+
+async function deployToOpenVSX(token) {
+    await ovsx.publish({
+        packagePath: cwd,
+        pat: token,
+        yarn: false,
+    });
+}
 
 (async () => {
     try {
-        const PAT = process.env.VSCE_AUTH_TOKEN.trim();
-        if ('' === PAT) {
+        const VSCE_AUTH_TOKEN = process.env.VSCE_AUTH_TOKEN.trim();
+        if ('' === VSCE_AUTH_TOKEN) {
             throw new Error(`No Personal Access Token in 'VSCE_AUTH_TOKEN' defined!`);
         }
 
-        await vsce.publish({
-            cwd: __dirname,
-            pat: PAT,
-            useYarn: false,
-        });
+        const OPENVSX_SECRET = process.env.OPENVSX_SECRET.trim();
+        if ('' === OPENVSX_SECRET) {
+            throw new Error(`No Open VSX Access Token in 'OPENVSX_SECRET' defined!`);
+        }
+
+        await deployToMarketplace(VSCE_AUTH_TOKEN);
+        await deployToOpenVSX(OPENVSX_SECRET);
     } catch (e) {
         console.error(e);
 
