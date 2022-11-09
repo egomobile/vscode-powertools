@@ -331,15 +331,9 @@ ${FOOTER}`;
                 path.join(R.fsPath, p)
             );
 
-            /* does currently not work: 'Cannot read property 'createKey' of undefined.'
-            u = this.view.asWebviewUri(
+            u = this.panel.webview.asWebviewUri(
                 vscode.Uri.file(PATH_TO_CHECK)
             );
-            */
-
-            u = vscode.Uri.file(PATH_TO_CHECK).with({
-                scheme: 'vscode-resource'
-            });
 
             try {
                 if (ego_helpers.isFileSync(PATH_TO_CHECK, false)) {
@@ -538,9 +532,9 @@ ${FOOTER}`;
                     });
                 });
 
-                newPanel.webview.html = this.generateHtml();
-
                 this._panel = newPanel;
+
+                newPanel.webview.html = this.generateHtml();
             } catch (e) {
                 ego_helpers.tryDispose(newPanel);
 

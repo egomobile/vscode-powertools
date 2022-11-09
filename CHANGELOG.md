@@ -1,5 +1,9 @@
 # Change Log (vscode-powertools)
 
+## 0.67.2 (November 9th, 2022; bug fixes)
+
+* bugfixes
+
 ## 0.67.1 (December 6th, 2021; Open VSX support)
 
 * now also deploy to [open-vsx.org](https://open-vsx.org/), s. [PR #6](https://github.com/egomobile/vscode-powertools/issues/6) by [Michoel Chaikin](https://github.com/michoelchaikin)
