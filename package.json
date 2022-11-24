@@ -3,7 +3,7 @@
     "publisher": "egomobile",
     "displayName": "Power Tools",
     "description": "A set of useful and handy tools for Visual Studio Code.",
-    "version": "0.67.3",
+    "version": "0.67.4",
     "engines": {
         "vscode": "^1.62.0"
     },
