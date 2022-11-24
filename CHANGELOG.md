@@ -1,5 +1,9 @@
 # Change Log (vscode-powertools)
 
+## 0.67.3 (; bug fixes)
+
+* fix bug when trying to open [app](https://github.com/egomobile/vscode-powertools/wiki/Apps) from [store](https://github.com/egomobile/vscode-powertools/wiki/Apps#app-stores)
+
 ## 0.67.2 (November 9th, 2022; bug fixes)
 
 * bugfixes

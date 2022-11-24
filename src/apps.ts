@@ -685,7 +685,7 @@ export class AppWebView extends AppWebViewBase {
             }
         }
 
-        if (_.isNil(AppWebView)) {
+        if (_.isNil(app)) {
             app = new AppWebView(
                 extension,
                 output,
